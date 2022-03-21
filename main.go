@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -21,16 +20,6 @@ type Item struct {
 type Checkout struct {
 	SKU string `json:"sku"`
 	Qty int    `json:"qty"`
-}
-
-type CheckoutResponse struct {
-	SKU   string  `json:"sku"`
-	Name  string  `json:"name"`
-	Qty   int     `json:"qty"`
-	Total float32 `json:"total"`
-}
-
-type Response struct {
 }
 
 var items []Item
@@ -72,7 +61,7 @@ func CheckPromo(skus []string) float32 {
 
 		if reflect.DeepEqual(alexaPromo, skus) {
 			if item.SKU == alexaPromo[0] {
-				total = (item.Price * 3)
+				total = (item.Price * 3) - (item.Price*3)*10/100
 			}
 		}
 	}
@@ -96,8 +85,6 @@ func CheckoutItems(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	fmt.Println("Checkout API")
-
 	// Mock data items
 	items = append(items, Item{SKU: "120P90", Name: "Google Home", Price: 49.99, Qty: 10})
 	items = append(items, Item{SKU: "43N23P", Name: "MacBook Pro", Price: 5399.99, Qty: 5})
