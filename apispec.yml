@@ -1,0 +1,35 @@
+openapi: '3.0.2'
+info:
+  title: Checkout API
+  description: API Spec for Checkout Store
+  version: '1.0'
+servers:
+  - url: http://localhost:3000
+paths:
+  /checkout:
+    post:
+      description: Checkout Post
+      summary: Checkout Post
+      tags:
+        - "Checkout API"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                properties:
+                  sku:
+                    type: string
+                  qty:
+                    type: number
+      responses:
+        '200':
+          description: Success checkout items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: number
